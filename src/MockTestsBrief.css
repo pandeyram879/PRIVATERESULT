@@ -36,3 +36,58 @@
   color: #0f2027;
   transform: scale(1.05);
 }
+
+/* Responsive tweaks - added media queries for tablet and mobile */
+@media (max-width: 768px) {
+  .mockbrief-page {
+    padding: 30px 15px;
+  }
+
+  .mockbrief-title {
+    font-size: 2rem;
+    margin-bottom: 25px;
+  }
+
+  .mockbrief-list {
+    gap: 12px;
+  }
+
+  .mockbrief-item {
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    flex: 1 1 200px; /* Allow items to grow/shrink but wrap nicely */
+    max-width: 250px;
+  }
+
+  .mockbrief-item:hover {
+    transform: scale(1.02); /* Subtle scale on tablet */
+  }
+}
+
+@media (max-width: 480px) {
+  .mockbrief-page {
+    padding: 20px 10px;
+  }
+
+  .mockbrief-title {
+    font-size: 1.75rem;
+    margin-bottom: 20px;
+  }
+
+  .mockbrief-list {
+    gap: 10px;
+    flex-direction: column; /* Stack items vertically on very small screens for better readability */
+    align-items: center;
+  }
+
+  .mockbrief-item {
+    padding: 12px 18px;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .mockbrief-item:hover {
+    transform: none; /* Disable scale on mobile for better touch UX */
+  }
+}

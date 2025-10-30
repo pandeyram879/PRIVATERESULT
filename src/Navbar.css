@@ -1,0 +1,462 @@
+/* Navigation Bar */
+.navbar {
+  position: sticky;
+  top: 0;
+  background-color: #001f5b;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 8px 12px;
+  gap: 3px;
+  z-index: 100;
+  justify-content: space-around;
+}
+
+/* Navbar Links */
+.navbar a {
+  color: white;
+  padding: 8px 12px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 4px;
+}
+
+.navbar a:hover {
+  background-color: #003080;
+}
+
+/* WhatsApp Link Styling */
+.whatsapp-link {
+  display: flex;
+  align-items: center;
+}
+
+.whatsapp-logo {
+  height: 18px;
+  width: auto;
+  vertical-align: middle;
+}
+
+/* --- GOOGLE-LIKE SEARCH BAR (FIRST ITEM IN NAV) --- */
+.nav-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav-search-input {
+  width: 190px;
+  padding: 8px 12px 8px 36px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background: black;
+  color: white;
+  font-size: 0.95rem;
+  position: relative;
+  z-index: 1;
+}
+
+.nav-search::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #00f, #f0f, #00f);
+  background-size: 200% 200%;
+  animation: glowing 3s ease infinite;
+  filter: blur(4px);
+  z-index: 0;
+}
+
+@keyframes glowing {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.nav-search-icon {
+  position: absolute;
+  left: 12px;
+  color: white;
+  font-size: 1rem;
+  z-index: 2;
+}
+
+.nav-search-input:focus {
+  width: 200px;
+}
+
+.nav-search-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 5px 10px;
+  background: red;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.nav-search-btn:hover {
+  background: #c30000;
+}
+
+/* Absolute dropdown */
+.nav-search-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 260px;
+  max-width: 80vw;
+  max-height: 280px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15),
+              0 2px 4px rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+}
+
+.nav-search-dropdown.empty {
+  padding: 8px 10px;
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.nav-search-item {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 8px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-search-item:hover,
+.nav-search-item.active {
+  background: #f3f4f6;
+}
+
+.nav-search-item-title {
+  color: #111827;
+  font-size: 0.85rem;
+}
+
+.nav-search-badge {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+}
+
+.badge-internal {
+  background: #e7f3ff;
+  color: #004b9a;
+  border-color: #b3d7ff;
+}
+
+.badge-external {
+  background: #fff4e6;
+  color: #9a4b00;
+  border-color: #ffd6a8;
+}
+
+/* ========================================
+   HAMBURGER MENU STYLES 
+   ======================================== */
+
+/* Hamburger Button - Hidden on Desktop */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 101;
+  position: relative;
+}
+
+.hamburger-btn span {
+  width: 100%;
+  height: 3px;
+  background: white;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+/* Hamburger Animation */
+.hamburger-btn span.open:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.hamburger-btn span.open:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-btn span.open:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Nav Links Container - Default Desktop Layout */
+.nav-links-container {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+/* Menu Overlay */
+.menu-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 98;
+}
+
+/* ========================================
+   RESPONSIVE STYLES - TABLET & MOBILE
+   ======================================== */
+
+@media (max-width: 900px) {
+  /* Navbar Layout - Search left, Hamburger right */
+  .navbar {
+    position: relative;
+    z-index: 90;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+
+  /* Search stays visible on LEFT in navbar */
+  .nav-search {
+    order: 1;
+    margin-right: 10px;
+  }
+
+  /* Show Hamburger Button on RIGHT */
+  .hamburger-btn {
+    display: flex;
+    order: 2;
+    margin-left: auto;
+  }
+
+  /* Hide Nav Links by Default - Fixed position from top */
+  .nav-links-container {
+    position: fixed;
+    top: 120px;
+    right: -100%;
+    width: 280px;
+    height: calc(100vh - 120px);
+    background-color: #001f5b;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 20px;
+    transition: right 0.3s ease-in-out;
+    overflow-y: auto;
+    z-index: 99;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Show Menu when Open */
+  .nav-links-container.open {
+    right: 0;
+  }
+
+  /* Show Overlay when Menu Open */
+  .nav-links-container.open ~ .menu-overlay,
+  .menu-overlay {
+    display: block;
+  }
+
+  /* Style Links in Mobile Menu */
+  .nav-links-container a {
+    width: 100%;
+    padding: 15px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    justify-content: flex-start;
+  }
+
+  /* Hide Search Bar inside Mobile Menu (it's in navbar now) */
+  .nav-links-container .nav-search {
+    display: none;
+  }
+
+  .whatsapp-logo {
+    height: 16px;
+  }
+}
+
+/* Smaller Mobile Adjustments */
+@media (max-width: 600px) {
+  .navbar {
+    padding: 8px;
+    gap: 5px;
+  }
+  
+  .hamburger-btn {
+    width: 28px;
+    height: 23px;
+  }
+
+  .nav-search-input {
+    width: 150px;
+    padding: 6px 10px 6px 32px;
+    font-size: 0.9rem;
+  }
+
+  .nav-search-input:focus {
+    width: 170px;
+  }
+  
+  .nav-search-icon {
+    left: 10px;
+    font-size: 0.9rem;
+  }
+  
+  .nav-links-container {
+    width: 260px;
+    padding: 15px;
+    top: 100px;
+    height: calc(100vh - 100px);
+  }
+  
+  .nav-links-container a {
+    padding: 12px 8px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hamburger-btn {
+    width: 26px;
+    height: 21px;
+  }
+  
+  .hamburger-btn span {
+    height: 2.5px;
+  }
+
+  .nav-search-input {
+    width: 130px;
+    padding: 5px 8px 5px 28px;
+    font-size: 0.85rem;
+  }
+
+  .nav-search-input:focus {
+    width: 150px;
+  }
+  
+  .nav-search-icon {
+    left: 8px;
+    font-size: 0.85rem;
+  }
+  
+  .nav-links-container {
+    width: 240px;
+    top: 90px;
+    height: calc(100vh - 90px);
+  }
+  
+  .nav-links-container a {
+    padding: 10px 8px;
+    font-size: 0.85rem;
+  }
+  
+  .nav-search-dropdown {
+    max-height: 200px;
+  }
+  
+  .nav-search-item {
+    padding: 6px 8px;
+  }
+  
+  .nav-search-item-title {
+    font-size: 0.8rem;
+  }
+  
+  .nav-search-badge {
+    font-size: 0.65rem;
+    padding: 1px 4px;
+  }
+  
+  .whatsapp-logo {
+    height: 14px;
+  }
+}
+
+@media (max-width: 320px) {
+  .hamburger-btn {
+    width: 24px;
+    height: 19px;
+  }
+
+  .nav-search-input {
+    width: 110px;
+    padding: 4px 6px 4px 24px;
+    font-size: 0.8rem;
+  }
+
+  .nav-search-input:focus {
+    width: 130px;
+  }
+  
+  .nav-search-icon {
+    left: 6px;
+    font-size: 0.8rem;
+  }
+  
+  .nav-links-container {
+    width: 220px;
+    padding: 12px;
+    top: 109px;
+    height: calc(100vh - 80px);
+  }
+  
+  .nav-links-container a {
+    padding: 8px 6px;
+    font-size: 0.8rem;
+  }
+  
+  .nav-search-dropdown {
+    max-height: 150px;
+  }
+  
+  .nav-search-item {
+    padding: 4px 6px;
+  }
+  
+  .nav-search-item-title {
+    font-size: 0.75rem;
+  }
+  
+  .nav-search-badge {
+    font-size: 0.6rem;
+    padding: 1px 3px;
+  }
+  
+  .whatsapp-logo {
+    height: 12px;
+  }
+}

@@ -1,0 +1,128 @@
+/* Header.css - Height reduced for a smaller header */
+
+/* Top Header */
+.header {
+  background: linear-gradient(90deg, #0066ff, #00e0ff);
+  text-align: center;
+  padding: 1px 10px; /* Reduced padding for smaller height (change this value as needed) */
+  color: black;
+  font-family: Arial, sans-serif;
+  width: 100vw;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Agar aur chhota chahiye, to padding ko 3px 10px ya kam karo */
+}
+
+.header h1 {
+  color: white;
+  font-size: 3rem;
+  margin: 0;
+  font-weight: bold;
+}
+
+.header div:nth-child(2) { /* Welcome to Our Platform */
+  font-size: 1.3rem;
+  font-weight: 540;
+  margin: 1px 0; /* Reduced margin for compactness */
+  margin-top: -5px; /* Slightly reduced margin-top */
+}
+
+.header .panel { /* Typing animation panel */
+  font-size: 1.1rem;
+  font-weight: 549;
+  margin: 1px 0; /* Reduced margin for compactness */
+  font-style: italic;
+  white-space: nowrap;
+  margin-top: -5px; /* Slightly reduced margin-top */
+}
+
+.header a {
+  color: #fff;
+  font-size: 1.2rem;
+  text-decoration: underline;
+}
+
+.header .badge {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  font-size: 0.9rem;
+  padding: 3px 8px; /* Slightly reduced padding */
+  border-radius: 20px;
+  margin-top: 5px; /* Reduced margin */
+}
+
+/* Typing cursor animation */
+.typing-cursor {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Responsive adjustments for header */
+@media (max-width: 900px) {
+  .header {
+    padding: 4px 10px; /* Smaller padding for tablets */
+  }
+  .header h1 {
+    font-size: 2.5rem;
+  }
+  .header div:nth-child(2) {
+    font-size: 1.3rem;
+  }
+  .header .panel {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2.2rem;
+  }
+  .header div:nth-child(2) {
+    font-size: 1.2rem;
+  }
+  .header .panel {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 3px 8px; /* Even smaller for mobile */
+  }
+  .header h1 {
+    font-size: 2rem;
+  }
+  .header a {
+    font-size: 1rem;
+  }
+  .header div:nth-child(2) {
+    font-size: 1.1rem;
+  }
+  .header .panel {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.8rem;
+  }
+  .header div:nth-child(2) {
+    font-size: 1rem;
+  }
+  .header .panel {
+    font-size: 0.85rem;
+  }
+}

@@ -240,6 +240,7 @@
   font-family: "Segoe UI", sans-serif;
 }
 
+
 /* --- A4 preview box --- */
 .makecv-preview {
   width: 210mm;          /* A4 width */
@@ -262,5 +263,125 @@
     box-shadow: none;
     margin: 0;
     page-break-after: always;
+  }
+}
+
+/* Responsive tweaks - added media queries for tablet and mobile */
+@media (max-width: 768px) {
+  .makecv-page {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0.75rem;
+  }
+
+  .makecv-form {
+    flex: none;
+    padding: 1.25rem;
+    order: 1; /* Form first on mobile */
+  }
+
+  .makecv-preview {
+    flex: none;
+    width: 100%;
+    max-width: 100%;
+    min-height: auto; /* Allow natural height on mobile */
+    padding: 1rem;
+    margin: 0;
+    overflow-x: auto; /* Keep scrollable for A4 width */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .makecv-form label {
+    font-size: 0.95rem;
+  }
+
+  .makecv-form input,
+  .makecv-form textarea,
+  .makecv-form select {
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .makecv-form button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .cv-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .cv-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .cv-photo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .cv-template h3 {
+    font-size: 1rem;
+  }
+
+  .skills {
+    gap: 0.3rem;
+  }
+
+  .skill-chip {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .makecv-page {
+    padding: 0.5rem;
+    gap: 1rem;
+  }
+
+  .makecv-form {
+    padding: 1rem;
+  }
+
+  .makecv-preview {
+    padding: 0.75rem;
+  }
+
+  .makecv-form input,
+  .makecv-form textarea,
+  .makecv-form select {
+    padding: 0.6rem;
+    font-size: 0.95rem;
+  }
+
+  .makecv-form button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .cv-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .cv-photo {
+    width: 60px;
+    height: 60px;
+  }
+
+  .cv-template h3 {
+    font-size: 0.95rem;
+  }
+
+  .skill-chip {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 0.4rem;
   }
 }

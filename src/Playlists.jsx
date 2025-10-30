@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Papa from "papaparse";
+import { useNavigate } from "react-router-dom";
 import "./Playlists.css";
 
 export default function Playlists() {
@@ -7,6 +8,7 @@ export default function Playlists() {
   const [topic, setTopic] = useState("All");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const CSV_URL =
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSAopUPVpmy_NtrYcg2kfDMd6qKdy7wpPocGsA2j_c--3L3lbw8KbjqiIZeF96sBlwJFuz83iVY4EPQ/pub?gid=0&single=true&output=csv&nocache=" +
@@ -24,11 +26,11 @@ export default function Playlists() {
           })
         );
 
-        const rows = parsed.data.filter(r => r.VideoURL && r.VideoTitle);
+        const rows = parsed.data.filter((r) => r.VideoURL && r.VideoTitle);
 
-        // ✅ fetch each playlist/video thumbnail via YouTube oEmbed
+        // ✅ Fetch each video/playlist thumbnail using YouTube oEmbed
         const withThumbs = await Promise.all(
-          rows.map(async r => {
+          rows.map(async (r) => {
             try {
               const res = await fetch(
                 `https://www.youtube.com/oembed?url=${encodeURIComponent(
@@ -38,7 +40,7 @@ export default function Playlists() {
               const json = await res.json();
               return { ...r, Thumbnail: json.thumbnail_url || "" };
             } catch {
-              return { ...r, Thumbnail: "" }; // fallback if private or error
+              return { ...r, Thumbnail: "" };
             }
           })
         );
@@ -55,12 +57,15 @@ export default function Playlists() {
     loadData();
   }, []);
 
-  const topics = ["All", ...new Set(videos.map(v => v.Topic).filter(Boolean))];
+  const topics = ["All", ...new Set(videos.map((v) => v.Topic).filter(Boolean))];
   const filtered =
-    topic === "All" ? videos : videos.filter(v => v.Topic === topic);
+    topic === "All" ? videos : videos.filter((v) => v.Topic === topic);
 
   if (loading) return <div className="loading">Loading Playlists…</div>;
   if (error) return <div className="error">{error}</div>;
+
+  // ✅ Check if URL is playlist or single video
+  const isPlaylist = (url) => url.includes("list=");
 
   return (
     <div className="playlists-page">
@@ -68,8 +73,8 @@ export default function Playlists() {
 
       <div className="playlist-filter">
         <label>Select Topic:</label>
-        <select value={topic} onChange={e => setTopic(e.target.value)}>
-          {topics.map(t => (
+        <select value={topic} onChange={(e) => setTopic(e.target.value)}>
+          {topics.map((t) => (
             <option key={t}>{t}</option>
           ))}
         </select>
@@ -77,12 +82,18 @@ export default function Playlists() {
 
       <div className="playlist-grid">
         {filtered.map((vid, idx) => (
-          <a
+          <div
             key={idx}
-            href={vid.VideoURL}
-            target="_blank"
-            rel="noopener noreferrer"
             className="playlist-card"
+            onClick={() =>
+              navigate("/player", {
+                state: {
+                  title: vid.VideoTitle,
+                  url: vid.VideoURL,
+                  playlistVideos: isPlaylist(vid.VideoURL) ? filtered : [],
+                },
+              })
+            }
           >
             {vid.Thumbnail && (
               <img
@@ -94,7 +105,7 @@ export default function Playlists() {
             )}
             <span className="playlist-name">{vid.VideoTitle}</span>
             {vid.Topic && <span className="playlist-topic">{vid.Topic}</span>}
-          </a>
+          </div>
         ))}
       </div>
     </div>

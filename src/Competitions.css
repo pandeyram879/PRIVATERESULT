@@ -109,13 +109,117 @@
   text-align: center;
 }
 
-/* Responsive adjustments */
+/* Responsive Enhancements */
+@media (max-width: 1024px) {
+  .competitions-container {
+    padding: 30px 15px;
+    max-width: 1000px;
+  }
+  .competitions-container h1 {
+    font-size: 2.4rem;
+    margin-bottom: 40px;
+  }
+  .competition-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .competition-card {
+    padding: 22px 18px;
+  }
+  .competition-card h2 {
+    font-size: 1.3rem;
+  }
+  .competition-badge {
+    top: 12px;
+    right: 12px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+}
+
 @media (max-width: 768px) {
   .competitions-container {
     padding: 20px 10px;
   }
-
+  .competitions-container h1 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    letter-spacing: 0.5px;
+  }
+  .competition-grid {
+    grid-template-columns: 1fr; /* Stack to single column */
+    gap: 18px;
+  }
+  .competition-card {
+    padding: 20px 15px;
+    border-radius: 15px;
+  }
+  .competition-card:hover {
+    transform: translateY(-5px) scale(1.01); /* Reduced hover for touch devices */
+  }
   .competition-card h2 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+  .competition-card ul li {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    padding-left: 22px;
+  }
+  .competition-card ul li::before {
+    font-size: 0.9rem;
+  }
+  .competition-card ul li a:hover {
+    transform: translateX(3px);
+  }
+  .competition-badge {
+    top: 10px;
+    right: 10px;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+  .competition-category h2 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .competitions-container {
+    padding: 15px 8px;
+  }
+  .competitions-container h1 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+  }
+  .competition-grid {
+    gap: 15px;
+  }
+  .competition-card {
+    padding: 18px 12px;
+    border-radius: 12px;
+  }
+  .competition-card h2 {
+    font-size: 1.1rem;
+  }
+  .competition-card ul li {
+    font-size: 0.9rem;
+    padding-left: 20px;
+    margin-bottom: 8px;
+  }
+  .competition-card ul li::before {
+    top: 2px;
+  }
+  .competition-card ul li a {
+    font-size: 0.9rem;
+  }
+  .competition-badge {
+    position: static; /* Move badge inside on very small screens to avoid overflow */
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+  .competition-category h2 {
     font-size: 1.2rem;
   }
 }

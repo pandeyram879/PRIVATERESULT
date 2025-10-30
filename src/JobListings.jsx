@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Papa from "papaparse";
 import { useNavigate } from "react-router-dom";
+import "./JobListings.css";
 
 const JobListings = () => {
   const [jobs, setJobs] = useState([]);
