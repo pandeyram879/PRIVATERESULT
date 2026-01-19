@@ -65,10 +65,25 @@ const JobListings = () => {
     <div className="job-listings">
       <h2 className="section-title">💼 Job Listings</h2>
       <div className="job-listings-box">
-        {loading && <p className="loading">⏳ Loading Jobs…</p>}
+        {loading && (
+          <div style={{ 
+            minHeight: '380px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center' 
+          }}>
+            <p className="loading">⏳ Loading Jobs…</p>
+          </div>
+        )}
 
         {error && (
-          <div className="error-container">
+          <div className="error-container" style={{ 
+            minHeight: '380px', 
+            display: 'flex', 
+            flexDirection: 'column',
+            alignItems: 'center', 
+            justifyContent: 'center' 
+          }}>
             <p className="error">{error}</p>
             <button className="retry-btn" onClick={fetchJobs}>
               Retry
@@ -119,7 +134,14 @@ const JobListings = () => {
         )}
 
         {!loading && !error && jobs.length === 0 && (
-          <p className="error">No jobs available at the moment.</p>
+          <div style={{ 
+            minHeight: '380px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center' 
+          }}>
+            <p className="error">No jobs available at the moment.</p>
+          </div>
         )}
       </div>
     </div>

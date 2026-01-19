@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useMemo, useState, useCallback } from "react";
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "framer-motion"; // 👈 for fade animation
@@ -21,13 +21,23 @@ import Navbar from "./Navbar.jsx";
 import LandingPage from "./LandingPage.jsx";
 import QuickLinks from "./QuickLinks.jsx";
 import VideoPlayer from "./VideoPlayer.jsx";
+import AuthPages from "./AuthPages.jsx";
 
 function App() {
   const [query] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [hasVisited, setHasVisited] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Check if user has visited before (using sessionStorage for session-based, or localStorage for permanent)
+  useEffect(() => {
+    const visited = sessionStorage.getItem("hasVisitedBefore");
+    if (visited) {
+      setHasVisited(true);
+    }
+  }, []);
 
   const isLandingPage = location.pathname === "/"; // 👈 check route
 
@@ -96,12 +106,19 @@ function App() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [onKeyDown]);
 
+  // If user has visited before and tries to access landing page, redirect to home
+  if (hasVisited && location.pathname === "/") {
+    return <Navigate to="/home" replace />;
+  }
+
   return (
     <div>
-      {/* Header always visible */}
-      <div className="header">
-        <Header />
-      </div>
+      {/* Header visible only when NOT on LandingPage */}
+      {!isLandingPage && (
+        <div className="header">
+          <Header />
+        </div>
+      )}
 
       {/* Navbar visible only when NOT on LandingPage */}
       {!isLandingPage && (
@@ -156,6 +173,7 @@ function App() {
             <Route path="/interviewquestions" element={<InterviewQuestions />} />
             <Route path="/header" element={<Header />} />
             <Route path="/player" element={<VideoPlayer />} />
+            <Route path="/authpages" element={<AuthPages />} /> 
 
           </Routes>
         </motion.div>

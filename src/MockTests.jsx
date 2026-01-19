@@ -52,16 +52,36 @@ export default function MockTests() {
 
       <div className="mock-tests">
         {loading ? (
-          <p>Loading mock tests...</p>
+          <div style={{ 
+            minHeight: '380px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center' 
+          }}>
+            <p>Loading mock tests...</p>
+          </div>
         ) : error ? (
-          <div className="error-section">
+          <div className="error-section" style={{ 
+            minHeight: '380px', 
+            display: 'flex', 
+            flexDirection: 'column',
+            alignItems: 'center', 
+            justifyContent: 'center' 
+          }}>
             <p style={{ color: "red" }}>Failed to load mock tests.</p>
             <button className="retry-btn" onClick={fetchData}>
               Retry
             </button>
           </div>
         ) : tests.length === 0 ? (
-          <p>No mock tests available right now.</p>
+          <div style={{ 
+            minHeight: '380px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center' 
+          }}>
+            <p>No mock tests available right now.</p>
+          </div>
         ) : (
           <>
             <ul>

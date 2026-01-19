@@ -135,6 +135,7 @@ export default function Navbar() {
         <Link to="/competitions" onClick={handleLinkClick}>Competitions</Link>
         <Link to="/certifications" onClick={handleLinkClick}>Certifications</Link>
         <Link to="/careerpages" onClick={handleLinkClick}>CareerPages</Link>
+        <Link to="/authpages" onClick={handleLinkClick}>AuthPages</Link>
         
         <a
           href="https://www.instagram.com/privateresult/"
