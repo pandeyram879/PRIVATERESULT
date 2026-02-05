@@ -24,7 +24,7 @@ body {
 
 /* Section Titles */
 .section-title {
-  background: linear-gradient(90deg,#0066ff,#00e0ff);
+  background: linear-gradient(90deg,  #111827, #3b4076);
   color: white;
   padding: 8px;
   margin: 0 0 10px 0;
@@ -171,3 +171,6 @@ body {
   color: #9ca3af;
 }
 
+.dark-mode {
+  background:#0f172a;
+}

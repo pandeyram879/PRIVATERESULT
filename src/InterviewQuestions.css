@@ -1,125 +1,471 @@
-.interview-container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: "Poppins", sans-serif;
-  background: #f9fbff;
+/* ============================================
+   MODERN INTERVIEW Q&A - FULL WIDTH FIX
+   ============================================ */
+
+:root {
+  /* Color Palette */
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --dark-bg: #0a0e27;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --accent-color: #667eea;
+  --accent-secondary: #764ba2;
+  --accent-glow: rgba(102, 126, 234, 0.4);
+  --text-primary: #ffffff;
+  --text-secondary: #b8b9d4;
+  --question-bg: rgba(102, 126, 234, 0.15);
 }
+
+/* ============================================
+   BODY - ENSURE NO WHITE BACKGROUND
+   ============================================ */
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  background: linear-gradient(180deg, #0a0e27 0%, #1a1d3f 100%);
+}
+
+/* ============================================
+   ROOT CONTAINER - FULL WIDTH
+   ============================================ */
+
+#root,
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg, #0a0e27 0%, #1a1d3f 100%);
+}
+
+/* ============================================
+   CONTAINER - FULL WIDTH WITH PROPER CONSTRAINTS
+   ============================================ */
+
+.interview-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 60px 5%; /* 5% padding on sides instead of fixed margin */
+  font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: 
+    radial-gradient(ellipse at top, rgba(102, 126, 234, 0.15), transparent),
+    radial-gradient(ellipse at bottom, rgba(118, 75, 162, 0.15), transparent),
+    linear-gradient(180deg, #0a0e27 0%, #1a1d3f 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Animated background particles */
+.interview-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.08) 0%, transparent 50%);
+  animation: pulse 15s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* ============================================
+   TITLE
+   ============================================ */
 
 .interview-container h1 {
   text-align: center;
-  font-size: 2rem;
-  color: #1a73e8;
-  margin-bottom: 25px;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  margin: 0 0 20px 0;
+  background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
+  animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
 }
+
+/* Briefcase icon before title */
+.interview-container h1::before {
+  content: '💼';
+  font-size: 2.5rem;
+  -webkit-text-fill-color: initial;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   Q&A LIST - PROPER WIDTH CONTROL
+   ============================================ */
 
 .qa-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
+/* ============================================
+   Q&A CARDS - MODERN DESIGN
+   ============================================ */
+
 .qa-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: rgba(30, 33, 60, 0.7);
+  backdrop-filter: blur(30px);
+  border-radius: 16px;
+  padding: 0;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(139, 156, 255, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  border: 1px solid rgba(139, 156, 255, 0.2);
+  opacity: 0;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Staggered animation for cards */
+.qa-card:nth-child(1) { animation-delay: 0.1s; }
+.qa-card:nth-child(2) { animation-delay: 0.15s; }
+.qa-card:nth-child(3) { animation-delay: 0.2s; }
+.qa-card:nth-child(4) { animation-delay: 0.25s; }
+.qa-card:nth-child(5) { animation-delay: 0.3s; }
+.qa-card:nth-child(6) { animation-delay: 0.35s; }
+.qa-card:nth-child(7) { animation-delay: 0.4s; }
+.qa-card:nth-child(8) { animation-delay: 0.45s; }
+.qa-card:nth-child(n+9) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .qa-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+  transform: translateY(-6px);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(139, 156, 255, 0.4);
+  border-color: #8b9cff;
 }
+
+/* ============================================
+   QUESTION SECTION
+   ============================================ */
 
 .question {
-  font-size: 1.1rem;
-  color: #0b3d91;
-  margin-bottom: 10px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, rgba(139, 156, 255, 0.2), rgba(167, 139, 250, 0.2));
+  border-bottom: 1px solid rgba(139, 156, 255, 0.2);
+  line-height: 1.5;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
-.answer {
-  color: #333;
-  line-height: 1.6;
-  white-space: pre-line; /* in case of multi-line answers */
+/* Q badge before question */
+.question::before {
+  content: 'Q';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #8b9cff, #a78bfa);
+  color: white;
+  font-weight: 800;
+  font-size: 1rem;
+  border-radius: 10px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(139, 156, 255, 0.4);
 }
+
+/* ============================================
+   ANSWER SECTION
+   ============================================ */
+
+.answer {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  white-space: pre-line;
+  padding: 24px;
+  font-size: 0.98rem;
+  position: relative;
+}
+
+/* A badge before answer */
+.answer::before {
+  content: 'A';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(167, 139, 250, 0.2);
+  color: #a78bfa;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  margin-right: 12px;
+  margin-bottom: 12px;
+  float: left;
+}
+
+/* Code blocks in answers */
+.answer code {
+  background: rgba(139, 156, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: #8b9cff;
+}
+
+/* ============================================
+   LOADING & ERROR STATES
+   ============================================ */
 
 .loading,
 .error {
   text-align: center;
-  color: #555;
-  font-size: 1.1rem;
-  padding: 40px 0;
+  padding: 80px 20px;
+  font-size: 1.2rem;
+  position: relative;
+  z-index: 1;
 }
 
-/* Responsive tweaks - added media queries for mobile and tablet */
-@media (max-width: 768px) {
-  .interview-container {
-    padding: 15px;
-    max-width: 100%;
-  }
+.loading {
+  color: #8b9cff;
+  animation: pulse 2s ease-in-out infinite;
+}
 
-  .interview-container h1 {
-    font-size: 1.75rem;
-    margin-bottom: 20px;
+.loading::before {
+  content: '⏳';
+  display: block;
+  font-size: 4rem;
+  margin-bottom: 20px;
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.error {
+  color: #ff6b6b;
+}
+
+.error::before {
+  content: '⚠️';
+  display: block;
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Large Desktop (1600px and above) */
+@media (min-width: 1600px) {
+  .interview-container {
+    padding: 80px 10%;
+  }
+}
+
+/* Desktop (1200px to 1599px) */
+@media (max-width: 1599px) {
+  .interview-container {
+    padding: 70px 8%;
+  }
+}
+
+/* Desktop Medium (1024px to 1199px) */
+@media (max-width: 1199px) {
+  .interview-container {
+    padding: 60px 6%;
+  }
+}
+
+/* Tablet (768px to 1023px) */
+@media (max-width: 1023px) {
+  .interview-container {
+    padding: 50px 5%;
   }
 
   .qa-list {
-    gap: 15px;
-  }
-
-  .qa-card {
-    padding: 15px;
-    border-radius: 8px;
-  }
-
-  .qa-card:hover {
-    transform: none; /* Disable hover lift on touch devices for better UX */
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08); /* Keep subtle shadow */
+    gap: 20px;
   }
 
   .question {
-    font-size: 1rem;
+    font-size: 1.08rem;
+    padding: 18px 20px;
   }
 
   .answer {
-    line-height: 1.5;
-  }
-
-  .loading,
-  .error {
-    padding: 30px 0;
-    font-size: 1rem;
+    padding: 20px;
+    font-size: 0.95rem;
   }
 }
 
-@media (max-width: 480px) {
+/* Mobile Large (640px to 767px) */
+@media (max-width: 767px) {
   .interview-container {
-    padding: 10px;
-  }
-
-  .interview-container h1 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
+    padding: 40px 4%;
   }
 
   .qa-list {
-    gap: 12px;
+    gap: 18px;
   }
 
   .qa-card {
-    padding: 12px;
-    border-radius: 6px;
+    border-radius: 14px;
+  }
+
+  .question {
+    font-size: 1.05rem;
+    padding: 16px 18px;
+  }
+
+  .question::before {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  .answer {
+    padding: 18px;
+    font-size: 0.93rem;
+  }
+
+  .answer::before {
+    width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile (480px to 639px) */
+@media (max-width: 639px) {
+  .interview-container {
+    padding: 30px 3%;
+  }
+
+  .interview-container h1 {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .qa-list {
+    gap: 16px;
+  }
+
+  .question {
+    font-size: 1rem;
+    padding: 14px 16px;
+  }
+
+  .answer {
+    padding: 16px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile Small (360px to 479px) */
+@media (max-width: 479px) {
+  .interview-container {
+    padding: 24px 2.5%;
+  }
+
+  .qa-list {
+    gap: 14px;
   }
 
   .question {
     font-size: 0.95rem;
-    margin-bottom: 8px;
+    padding: 12px 14px;
   }
 
-  .loading,
-  .error {
-    padding: 20px 0;
-    font-size: 0.95rem;
+  .question::before {
+    width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
+  }
+
+  .answer {
+    padding: 14px;
+    font-size: 0.88rem;
+  }
+
+  .answer::before {
+    width: 24px;
+    height: 24px;
+    font-size: 0.8rem;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+.qa-card:focus-within {
+  border-color: #8b9cff;
+  box-shadow: 0 0 0 3px rgba(139, 156, 255, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

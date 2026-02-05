@@ -1,179 +1,339 @@
-/* ===== JobListingsBrief.css ===== */
+/* ============================================
+   JOB LISTINGS - FIXED COLUMN ALIGNMENT
+   ============================================ */
 
-/* Page container */
-.jobbrief-page {
-  padding: 40px 20px;
-  max-width: 1000px;
-  margin: 0 auto;
-  background: #f7f9fc;
-  min-height: 100vh;
-  box-sizing: border-box;
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --dark-bg: #0a0e27;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --accent-color: #8b9cff;
+  --accent-glow: rgba(102, 126, 234, 0.4);
+  --text-primary: #ffffff;
+  --text-secondary: #b8b9d4;
 }
 
-/* Title */
+/* ============================================
+   PAGE CONTAINER
+   ============================================ */
+
+.jobbrief-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1a1d3f 0%, #0a0e27 100%);
+  padding: 60px 20px;
+  font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-primary);
+}
+
+/* ============================================
+   TITLE
+   ============================================ */
+
 .jobbrief-title {
   text-align: center;
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 30px;
-  color: #222;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 50px;
+  background: linear-gradient(135deg, #a78bfa, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Table wrapper */
+/* ============================================
+   TABLE CONTAINER - CRITICAL FOR ALIGNMENT
+   ============================================ */
+
+.jobbrief-table-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  overflow-x: auto;
+  background: rgba(30, 33, 60, 0.7);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 0;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Custom scrollbar */
+.jobbrief-table-container::-webkit-scrollbar {
+  height: 10px;
+}
+
+.jobbrief-table-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.jobbrief-table-container::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 5px;
+}
+
+/* ============================================
+   TABLE - FIXED LAYOUT IS KEY
+   ============================================ */
+
 .jobbrief-table {
   width: 100%;
   border-collapse: collapse;
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  table-layout: fixed; /* CRITICAL: This ensures columns stay aligned */
+  background: transparent;
 }
 
-/* Table head */
+/* ============================================
+   TABLE HEAD
+   ============================================ */
+
 .jobbrief-table thead {
-  background: #0077ff;
-  color: #fff;
+  background: linear-gradient(135deg, rgba(139, 156, 255, 0.2), rgba(118, 75, 162, 0.2));
+  border-bottom: 2px solid rgba(139, 156, 255, 0.3);
 }
 
-.jobbrief-table th,
-.jobbrief-table td {
-  padding: 14px 16px;
+.jobbrief-table thead tr {
+  border: none;
+}
+
+.jobbrief-table th {
+  padding: 20px 24px;
   text-align: left;
-  border-bottom: 1px solid #e6e6e6;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  white-space: nowrap;
+}
+
+/* Define column widths explicitly */
+.jobbrief-table th:nth-child(1) { width: 18%; } /* POST NAME */
+.jobbrief-table th:nth-child(2) { width: 42%; } /* DEPARTMENT */
+.jobbrief-table th:nth-child(3) { width: 15%; } /* LAST DATE */
+.jobbrief-table th:nth-child(4) { width: 25%; } /* APPLY LINK */
+
+/* Center align last column header */
+.jobbrief-table th:last-child {
+  text-align: center;
+}
+
+/* ============================================
+   TABLE BODY
+   ============================================ */
+
+.jobbrief-table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
 }
 
 .jobbrief-table tbody tr:hover {
-  background: #f1f6ff;
-  transition: background 0.3s ease;
+  background: rgba(139, 156, 255, 0.1);
 }
 
-/* Loading & Error text */
+.jobbrief-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.jobbrief-table td {
+  padding: 20px 24px;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  border: none;
+  vertical-align: middle;
+}
+
+/* Apply same widths to td as th */
+.jobbrief-table td:nth-child(1) { width: 18%; } /* POST NAME */
+.jobbrief-table td:nth-child(2) { width: 42%; } /* DEPARTMENT */
+.jobbrief-table td:nth-child(3) { width: 15%; } /* LAST DATE */
+.jobbrief-table td:nth-child(4) { width: 25%; } /* APPLY LINK */
+
+/* Post Name - Make it stand out */
+.jobbrief-table td:nth-child(1) {
+  font-weight: 700;
+  color: var(--accent-color);
+  font-size: 1rem;
+}
+
+/* Department */
+.jobbrief-table td:nth-child(2) {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* Last Date */
+.jobbrief-table td:nth-child(3) {
+  color: var(--text-secondary);
+}
+
+/* Apply Link - Center align */
+.jobbrief-table td:nth-child(4) {
+  text-align: center;
+}
+
+/* ============================================
+   APPLY BUTTON
+   ============================================ */
+
+.apply-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #8b9cff, #a78bfa);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(139, 156, 255, 0.3);
+  white-space: nowrap;
+}
+
+.apply-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(139, 156, 255, 0.5);
+  background: linear-gradient(135deg, #a78bfa, #ec4899);
+}
+
+.apply-btn::after {
+  content: '→';
+  font-size: 1.2rem;
+}
+
+/* ============================================
+   LOADING & ERROR
+   ============================================ */
+
 .loading,
 .error {
   text-align: center;
-  padding: 20px;
-  font-size: 1rem;
-  color: #555;
+  padding: 60px 20px;
+  font-size: 1.2rem;
 }
 
-/* ===============================
-   Attractive Moving Gradient Button
-   =============================== */
-
-.jobbrief-table a.apply-btn {
-  display: inline-block;
-  padding: 6px 14px;
-  border-radius: 6px;
-  background: linear-gradient(270deg, #00eaff, #0077ff);
-  background-size: 200% 200%;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 600;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: gradientMove 3s linear infinite;
+.loading {
+  color: var(--accent-color);
 }
 
-.jobbrief-table a.apply-btn:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 4px 14px rgba(0, 234, 255, 0.4);
+.error {
+  color: #ff6b6b;
 }
 
-/* Gradient animation */
-@keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 
-/* Responsive tweaks - added media queries for tablet and mobile */
-@media (max-width: 768px) {
+/* Desktop */
+@media (min-width: 1200px) {
   .jobbrief-page {
-    padding: 30px 15px;
-    max-width: 100%;
+    padding: 70px 40px;
   }
+}
 
-  .jobbrief-title {
-    font-size: 1.75rem;
-    margin-bottom: 25px;
-  }
-
-  .jobbrief-table {
-    font-size: 0.9rem;
-    overflow-x: auto; /* Allow horizontal scroll on smaller screens if table is wide */
-    display: block;
-    white-space: nowrap;
+/* Tablet */
+@media (max-width: 1024px) {
+  .jobbrief-page {
+    padding: 50px 20px;
   }
 
   .jobbrief-table th,
   .jobbrief-table td {
-    padding: 10px 12px;
+    padding: 16px 20px;
     font-size: 0.9rem;
-    min-width: 100px; /* Prevent columns from shrinking too much */
   }
 
-  .jobbrief-table tbody tr:hover {
-    background: #f1f6ff; /* Keep hover, but it works on touch too */
-  }
-
-  .jobbrief-table a.apply-btn {
-    padding: 8px 12px;
+  .apply-btn {
+    padding: 8px 20px;
     font-size: 0.85rem;
-    min-width: 80px; /* Ensure button doesn't get too small */
+  }
+}
+
+/* Mobile - Card Layout */
+@media (max-width: 767px) {
+  .jobbrief-page {
+    padding: 40px 16px;
   }
 
-  .jobbrief-table a.apply-btn:hover {
-    transform: translateY(-1px) scale(1.02); /* Subtle hover on mobile */
+  .jobbrief-table-container {
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
   }
 
-  .loading,
-  .error {
-    padding: 15px;
-    font-size: 0.95rem;
+  .jobbrief-table,
+  .jobbrief-table thead,
+  .jobbrief-table tbody,
+  .jobbrief-table th,
+  .jobbrief-table td,
+  .jobbrief-table tr {
+    display: block;
+  }
+
+  .jobbrief-table thead {
+    display: none;
+  }
+
+  .jobbrief-table tbody tr {
+    background: rgba(30, 33, 60, 0.7);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(139, 156, 255, 0.2);
+  }
+
+  .jobbrief-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border: none;
+    width: 100% !important;
+  }
+
+  .jobbrief-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+  }
+
+  .jobbrief-table td:first-child {
+    font-size: 1.2rem;
+    padding-bottom: 16px;
+    margin-bottom: 12px;
+    border-bottom: 2px solid rgba(139, 156, 255, 0.2);
+  }
+
+  .jobbrief-table td:last-child {
+    padding-top: 16px;
+    margin-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    justify-content: center;
+  }
+
+  .jobbrief-table td:last-child::before {
+    display: none;
+  }
+
+  .apply-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 24px;
   }
 }
 
 @media (max-width: 480px) {
   .jobbrief-page {
-    padding: 20px 10px;
+    padding: 30px 12px;
   }
 
-  .jobbrief-title {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
+  .jobbrief-table tbody tr {
+    padding: 16px;
   }
 
-  .jobbrief-table {
-    font-size: 0.85rem;
-  }
-
-  .jobbrief-table th,
   .jobbrief-table td {
-    padding: 8px 10px;
-    font-size: 0.85rem;
-    min-width: 80px;
-  }
-
-  .jobbrief-table a.apply-btn {
-    padding: 6px 10px;
-    font-size: 0.8rem;
-    min-width: 70px;
-  }
-
-  .jobbrief-table a.apply-btn:hover {
-    transform: none; /* Disable transform on very small screens for better touch */
-    box-shadow: 0 2px 8px rgba(0, 234, 255, 0.3);
-  }
-
-  .loading,
-  .error {
-    padding: 10px;
     font-size: 0.9rem;
   }
 }

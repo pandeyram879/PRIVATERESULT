@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import "./Header.css"; // Import the CSS file for styles
+import { useNavigate } from "react-router-dom";
+import "./Header.css";
 
 function Header() {
-  // Typing animation states
-  const [displayText, setDisplayText] = useState('');
+  const navigate = useNavigate();
+
+  const [displayText, setDisplayText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTypingComplete, setIsTypingComplete] = useState(false);
-  
+
   const panelText = "Private Jobs & Career Guideance Portal";
 
   useEffect(() => {
@@ -19,15 +21,23 @@ function Header() {
     } else {
       setIsTypingComplete(true);
     }
-  }, [currentIndex, panelText]);
+  }, [currentIndex]);
 
   return (
     <div className="header">
-      <h1>PRIVATE RESULT</h1>
-      <div>Welcome to Our Platform</div>
-      <div className="panel">
-        {displayText}
-        {!isTypingComplete && <span className="typing-cursor">|</span>}
+      <div className="header-content">
+        <div className="header-left">
+          <h1 onClick={() => navigate("/home")} style={{ cursor: "pointer" }}>
+            PRIVATE RESULT
+          </h1>
+
+          <div>Welcome to Our Platform</div>
+
+          <div className="panel">
+            {displayText}
+            {!isTypingComplete && <span className="typing-cursor">|</span>}
+          </div>
+        </div>
       </div>
     </div>
   );

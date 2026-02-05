@@ -1,225 +1,538 @@
+/* ============================================
+   MODERN COMPETITIONS DESIGN
+   ============================================ */
+
+/* CSS Variables for consistent theming */
+:root {
+  --primary-color: #2563eb;
+  --primary-dark: #1e40af;
+  --accent-color: #f59e0b;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  
+  /* Difficulty colors */
+  --easy-color: #10b981;
+  --medium-color: #f59e0b;
+  --hard-color: #ef4444;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.15);
+  
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  
+  /* Transitions */
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* General container */
 .competitions-container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 40px 20px;
-  font-family: 'Poppins', sans-serif;
-  background: #f0f4ff;
+  padding: 64px 40px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-secondary);
+  min-height: 100vh;
 }
 
-/* Main heading */
+/* Main heading with modern styling */
 .competitions-container h1 {
   text-align: center;
-  font-size: 2.8rem;
-  color: #0a1f44;
-  margin-bottom: 50px;
-  letter-spacing: 1px;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 56px;
+  letter-spacing: -0.5px;
+  position: relative;
+  display: inline-block;
+  width: 100%;
 }
 
-/* Grid layout for competition cards */
+/* Decorative underline for heading */
+.competitions-container h1::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 5px;
+  background: var(--bg-gradient);
+  margin: 20px auto 0;
+  border-radius: 3px;
+  animation: expandWidth 0.8s ease-out;
+}
+
+@keyframes expandWidth {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100px;
+  }
+}
+
+/* Grid layout with stagger animation */
 .competition-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 32px;
+  animation: fadeInUp 0.6s ease-in;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Individual competition card */
 .competition-card {
-  background: linear-gradient(135deg, #ffffff, #e6f0ff);
-  padding: 25px 20px;
-  border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  background: var(--bg-primary);
+  padding: 32px 28px;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: var(--transition);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Gradient accent line at top */
+.competition-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--bg-gradient);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.competition-card:hover::before {
+  transform: scaleX(1);
 }
 
 /* Card hover effect */
 .competition-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
-/* Difficulty badge */
+/* Difficulty badge - modern design */
 .competition-badge {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  padding: 6px 12px;
-  border-radius: 12px;
-  font-size: 0.85rem;
+  top: 20px;
+  right: 20px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.75rem;
   font-weight: 600;
   color: #fff;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: var(--transition-fast);
+  z-index: 10;
 }
 
-/* Badge colors based on difficulty */
-.badge-easy { background-color: #28a745; }
-.badge-medium { background-color: #ffc107; color: #0a1f44; }
-.badge-hard { background-color: #dc3545; }
+.competition-card:hover .competition-badge {
+  transform: scale(1.05);
+}
+
+/* Badge colors with modern palette */
+.badge-easy { 
+  background: linear-gradient(135deg, var(--easy-color), #059669);
+}
+
+.badge-medium { 
+  background: linear-gradient(135deg, var(--medium-color), #d97706);
+  color: #fff;
+}
+
+.badge-hard { 
+  background: linear-gradient(135deg, var(--hard-color), #dc2626);
+}
 
 /* Card headings */
 .competition-card h2 {
-  font-size: 1.4rem;
-  color: #003366;
-  margin-bottom: 15px;
-  line-height: 1.3;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  margin-top: 8px;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+  padding-right: 80px; /* Space for badge */
 }
 
 /* Competition links list */
 .competition-card ul {
   list-style: none;
   padding-left: 0;
+  margin: 0;
+  flex-grow: 1;
 }
 
 .competition-card ul li {
-  margin-bottom: 12px;
-  font-size: 1rem;
+  margin-bottom: 14px;
+  font-size: 0.9375rem;
   position: relative;
-  padding-left: 25px;
-  transition: transform 0.2s ease;
+  padding-left: 28px;
+  transition: var(--transition-fast);
+  color: var(--text-secondary);
 }
 
-/* Arrow icon for list items */
+.competition-card ul li:last-child {
+  margin-bottom: 0;
+}
+
+/* Modern arrow icon with gradient */
 .competition-card ul li::before {
-  content: "➡️";
+  content: "→";
   position: absolute;
   left: 0;
   top: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  transition: var(--transition-fast);
 }
 
-/* Link styles */
+.competition-card ul li:hover::before {
+  transform: translateX(4px);
+  color: var(--accent-color);
+}
+
+/* Link styles with smooth animations */
 .competition-card ul li a {
   text-decoration: none;
-  color: #0d6efd;
+  color: var(--primary-color);
   font-weight: 500;
-  transition: color 0.3s ease, transform 0.2s ease;
+  transition: var(--transition-fast);
+  position: relative;
+  display: inline-block;
+}
+
+/* Animated underline effect */
+.competition-card ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-color);
+  transition: width 0.3s ease;
 }
 
 .competition-card ul li a:hover {
-  color: #ff6600;
-  transform: translateX(5px);
+  color: var(--accent-color);
+  transform: translateX(3px);
+}
+
+.competition-card ul li a:hover::after {
+  width: 100%;
 }
 
 /* Section headings for categories */
-.competition-category h2 {
-  margin-bottom: 15px;
-  font-size: 1.6rem;
-  color: #0a1f44;
-  text-align: center;
+.competition-category {
+  margin-bottom: 40px;
 }
 
-/* Responsive Enhancements */
+.competition-category h2 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 32px;
+  letter-spacing: -0.3px;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+/* Category heading underline */
+.competition-category h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--bg-gradient);
+  border-radius: 2px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Large tablets and small desktops */
 @media (max-width: 1024px) {
   .competitions-container {
-    padding: 30px 15px;
-    max-width: 1000px;
+    padding: 48px 32px;
   }
+  
   .competitions-container h1 {
-    font-size: 2.4rem;
-    margin-bottom: 40px;
+    margin-bottom: 44px;
   }
+  
   .competition-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 28px;
   }
+  
   .competition-card {
-    padding: 22px 18px;
+    padding: 28px 24px;
   }
+  
   .competition-card h2 {
-    font-size: 1.3rem;
+    font-size: 1.375rem;
+    padding-right: 75px;
   }
+  
   .competition-badge {
-    top: 12px;
-    right: 12px;
-    padding: 5px 10px;
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .competitions-container {
-    padding: 20px 10px;
-  }
-  .competitions-container h1 {
-    font-size: 2rem;
-    margin-bottom: 30px;
-    letter-spacing: 0.5px;
-  }
-  .competition-grid {
-    grid-template-columns: 1fr; /* Stack to single column */
-    gap: 18px;
-  }
-  .competition-card {
-    padding: 20px 15px;
-    border-radius: 15px;
-  }
-  .competition-card:hover {
-    transform: translateY(-5px) scale(1.01); /* Reduced hover for touch devices */
-  }
-  .competition-card h2 {
-    font-size: 1.2rem;
-    margin-bottom: 12px;
-  }
-  .competition-card ul li {
-    font-size: 0.95rem;
-    margin-bottom: 10px;
-    padding-left: 22px;
-  }
-  .competition-card ul li::before {
-    font-size: 0.9rem;
-  }
-  .competition-card ul li a:hover {
-    transform: translateX(3px);
-  }
-  .competition-badge {
-    top: 10px;
-    right: 10px;
-    padding: 4px 8px;
-    font-size: 0.75rem;
-  }
-  .competition-category h2 {
-    font-size: 1.4rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .competitions-container {
-    padding: 15px 8px;
-  }
-  .competitions-container h1 {
-    font-size: 1.8rem;
-    margin-bottom: 25px;
-  }
-  .competition-grid {
-    gap: 15px;
-  }
-  .competition-card {
-    padding: 18px 12px;
-    border-radius: 12px;
-  }
-  .competition-card h2 {
-    font-size: 1.1rem;
-  }
-  .competition-card ul li {
-    font-size: 0.9rem;
-    padding-left: 20px;
-    margin-bottom: 8px;
-  }
-  .competition-card ul li::before {
-    top: 2px;
-  }
-  .competition-card ul li a {
-    font-size: 0.9rem;
-  }
-  .competition-badge {
-    position: static; /* Move badge inside on very small screens to avoid overflow */
-    display: inline-block;
-    margin-bottom: 10px;
-    padding: 4px 8px;
+    top: 18px;
+    right: 18px;
+    padding: 7px 14px;
     font-size: 0.7rem;
   }
+  
   .competition-category h2 {
-    font-size: 1.2rem;
+    font-size: 1.75rem;
+    margin-bottom: 28px;
+  }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .competitions-container {
+    padding: 40px 24px;
+  }
+  
+  .competitions-container h1 {
+    margin-bottom: 36px;
+  }
+  
+  .competition-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .competition-card {
+    padding: 24px 20px;
+    border-radius: var(--radius-lg);
+  }
+  
+  .competition-card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .competition-card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+    padding-right: 70px;
+  }
+  
+  .competition-card ul li {
+    font-size: 0.875rem;
+    margin-bottom: 12px;
+    padding-left: 26px;
+  }
+  
+  .competition-card ul li::before {
+    font-size: 1rem;
+  }
+  
+  .competition-card ul li a:hover {
+    transform: translateX(2px);
+  }
+  
+  .competition-badge {
+    top: 16px;
+    right: 16px;
+    padding: 6px 12px;
+    font-size: 0.65rem;
+  }
+  
+  .competition-category h2 {
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 480px) {
+  .competitions-container {
+    padding: 32px 16px;
+  }
+  
+  .competitions-container h1 {
+    margin-bottom: 28px;
+  }
+  
+  .competitions-container h1::after {
+    width: 70px;
+    height: 4px;
+    margin: 16px auto 0;
+  }
+  
+  .competition-grid {
+    gap: 20px;
+  }
+  
+  .competition-card {
+    padding: 20px 16px;
+    border-radius: var(--radius-md);
+  }
+  
+  .competition-card:hover {
+    transform: translateY(-2px);
+  }
+  
+  .competition-card h2 {
+    font-size: 1.125rem;
+    margin-bottom: 20px;
+    padding-right: 0;
+    margin-top: 36px; /* Space for repositioned badge */
+  }
+  
+  .competition-card ul li {
+    font-size: 0.875rem;
+    padding-left: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .competition-card ul li::before {
+    font-size: 0.9375rem;
+    top: 1px;
+  }
+  
+  .competition-card ul li a {
+    font-size: 0.875rem;
+  }
+  
+  /* Reposition badge on mobile for better layout */
+  .competition-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    right: auto;
+    padding: 6px 12px;
+    font-size: 0.625rem;
+  }
+  
+  .competition-category h2 {
+    font-size: 1.375rem;
+    margin-bottom: 20px;
+  }
+  
+  .competition-category h2::after {
+    width: 50px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 360px) {
+  .competitions-container {
+    padding: 24px 12px;
+  }
+  
+  .competition-card {
+    padding: 18px 14px;
+  }
+  
+  .competition-card h2 {
+    font-size: 1.063rem;
+    margin-top: 32px;
+  }
+  
+  .competition-card ul li {
+    font-size: 0.813rem;
+    padding-left: 22px;
+  }
+  
+  .competition-badge {
+    padding: 5px 10px;
+    font-size: 0.563rem;
+  }
+}
+
+/* ============================================
+   DARK MODE SUPPORT (OPTIONAL)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --bg-primary: #1f2937;
+    --bg-secondary: #111827;
+  }
+  
+  .competition-card {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  
+  .competition-card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+  
+  .competition-badge {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================ */
+
+/* Focus states for keyboard navigation */
+.competition-card:focus-within {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.competition-card ul li a:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .competition-card:hover {
+    transform: none;
+  }
+  
+  .competition-card ul li a:hover {
+    transform: none;
   }
 }

@@ -1,93 +1,443 @@
+/* ============================================
+   MODERN MOCK BRIEF PAGE - REDESIGNED
+   ============================================ */
+
+:root {
+  /* Color Palette */
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --dark-bg: #0a0e27;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --accent-color: #667eea;
+  --accent-secondary: #764ba2;
+  --accent-glow: rgba(102, 126, 234, 0.4);
+  --text-primary: #ffffff;
+  --text-secondary: #b8b9d4;
+}
+
+/* ============================================
+   BASE LAYOUT
+   ============================================ */
+
 .mockbrief-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  padding: 40px 20px;
+  background: 
+    radial-gradient(ellipse at top, rgba(102, 126, 234, 0.15), transparent),
+    radial-gradient(ellipse at bottom, rgba(118, 75, 162, 0.15), transparent),
+    linear-gradient(180deg, #0a0e27 0%, #1a1d3f 100%);
+  background-attachment: fixed;
+  padding: 60px 20px;
   text-align: center;
-  font-family: 'Poppins', sans-serif;
-  color: #fff;
+  font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-primary);
+  position: relative;
+  overflow-x: hidden;
 }
+
+/* Animated background particles effect */
+.mockbrief-page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.08) 0%, transparent 50%);
+  animation: pulse 15s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* ============================================
+   TITLE SECTION
+   ============================================ */
 
 .mockbrief-title {
-  font-size: 2.5rem;
-  margin-bottom: 30px;
-  color: #00eaff;
-  text-shadow: 0 0 12px rgba(0,234,255,0.7);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #f093fb 50%, #f5576c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
+  animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  text-shadow: none;
 }
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Optional: Add subtitle */
+.mockbrief-subtitle {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text-secondary);
+  margin-bottom: 50px;
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
+  animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
+}
+
+/* ============================================
+   MOCK BRIEF LIST
+   ============================================ */
 
 .mockbrief-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
 }
+
+/* ============================================
+   MOCK BRIEF ITEMS
+   ============================================ */
 
 .mockbrief-item {
-  background: rgba(255,255,255,0.1);
-  padding: 12px 20px;
-  border: 2px solid #00eaff;
-  border-radius: 8px;
-  font-size: 1rem;
-  color: #fff;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  padding: 24px 28px;
+  border: 2px solid var(--card-border);
+  border-radius: 16px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
   cursor: pointer;
-  transition: all 0.3s ease;
-}
-.mockbrief-item:hover {
-  background: #00eaff;
-  color: #0f2027;
-  transform: scale(1.05);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  letter-spacing: 0.01em;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80px;
 }
 
-/* Responsive tweaks - added media queries for tablet and mobile */
-@media (max-width: 768px) {
+/* Staggered animation for items */
+.mockbrief-item:nth-child(1) { animation-delay: 0.1s; }
+.mockbrief-item:nth-child(2) { animation-delay: 0.15s; }
+.mockbrief-item:nth-child(3) { animation-delay: 0.2s; }
+.mockbrief-item:nth-child(4) { animation-delay: 0.25s; }
+.mockbrief-item:nth-child(5) { animation-delay: 0.3s; }
+.mockbrief-item:nth-child(6) { animation-delay: 0.35s; }
+.mockbrief-item:nth-child(7) { animation-delay: 0.4s; }
+.mockbrief-item:nth-child(8) { animation-delay: 0.45s; }
+.mockbrief-item:nth-child(n+9) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Gradient overlay on hover */
+.mockbrief-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--primary-gradient);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  border-radius: 16px;
+  z-index: -1;
+}
+
+.mockbrief-item:hover::before {
+  opacity: 1;
+}
+
+.mockbrief-item:hover {
+  transform: translateY(-8px) scale(1.03);
+  border-color: var(--accent-color);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 0 40px var(--accent-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.mockbrief-item:active {
+  transform: translateY(-4px) scale(1);
+}
+
+/* Icon/Number before text (optional enhancement) */
+.mockbrief-item::after {
+  content: '→';
+  position: absolute;
+  right: 20px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  font-size: 1.5rem;
+  color: var(--accent-color);
+}
+
+.mockbrief-item:hover::after {
+  opacity: 1;
+  right: 24px;
+}
+
+/* ============================================
+   LOADING STATE (Optional)
+   ============================================ */
+
+.mockbrief-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  font-size: 1.2rem;
+  color: var(--accent-color);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ============================================
+   EMPTY STATE (Optional)
+   ============================================ */
+
+.mockbrief-empty {
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.mockbrief-empty-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.mockbrief-empty-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Large Desktop (1400px and above) */
+@media (min-width: 1400px) {
+  .mockbrief-list {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1400px;
+  }
+}
+
+/* Desktop (1024px to 1399px) */
+@media (max-width: 1399px) {
+  .mockbrief-list {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+/* Tablet (768px to 1023px) */
+@media (max-width: 1023px) {
   .mockbrief-page {
-    padding: 30px 15px;
+    padding: 50px 20px;
+  }
+
+  .mockbrief-list {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    padding: 0 15px;
+  }
+
+  .mockbrief-item {
+    padding: 20px 24px;
+    font-size: 1rem;
+    min-height: 70px;
+  }
+}
+
+/* Tablet Small (640px to 767px) */
+@media (max-width: 767px) {
+  .mockbrief-page {
+    padding: 40px 16px;
   }
 
   .mockbrief-title {
-    font-size: 2rem;
-    margin-bottom: 25px;
+    margin-bottom: 12px;
+  }
+
+  .mockbrief-subtitle {
+    margin-bottom: 40px;
+  }
+
+  .mockbrief-list {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    padding: 0 10px;
+  }
+
+  .mockbrief-item {
+    padding: 18px 20px;
+    font-size: 0.95rem;
+    border-radius: 14px;
+    min-height: 65px;
+  }
+
+  .mockbrief-item:hover {
+    transform: translateY(-6px) scale(1.02);
+  }
+
+  .mockbrief-item::after {
+    font-size: 1.3rem;
+  }
+}
+
+/* Mobile (480px to 639px) */
+@media (max-width: 639px) {
+  .mockbrief-page {
+    padding: 30px 12px;
+  }
+
+  .mockbrief-list {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    max-width: 400px;
+  }
+
+  .mockbrief-item {
+    padding: 16px 20px;
+    font-size: 0.95rem;
+    border-radius: 12px;
+    min-height: 60px;
+    width: 100%;
+  }
+
+  .mockbrief-item:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+
+  .mockbrief-item::after {
+    right: 16px;
+    font-size: 1.2rem;
+  }
+
+  .mockbrief-item:hover::after {
+    right: 20px;
+  }
+}
+
+/* Mobile Small (360px to 479px) */
+@media (max-width: 479px) {
+  .mockbrief-page {
+    padding: 24px 10px;
   }
 
   .mockbrief-list {
     gap: 12px;
+    padding: 0 5px;
   }
 
   .mockbrief-item {
-    padding: 10px 16px;
-    font-size: 0.95rem;
-    flex: 1 1 200px; /* Allow items to grow/shrink but wrap nicely */
-    max-width: 250px;
-  }
-
-  .mockbrief-item:hover {
-    transform: scale(1.02); /* Subtle scale on tablet */
+    padding: 14px 18px;
+    font-size: 0.9rem;
+    min-height: 56px;
   }
 }
 
-@media (max-width: 480px) {
+/* Extra Small (below 360px) */
+@media (max-width: 359px) {
   .mockbrief-page {
-    padding: 20px 10px;
-  }
-
-  .mockbrief-title {
-    font-size: 1.75rem;
-    margin-bottom: 20px;
-  }
-
-  .mockbrief-list {
-    gap: 10px;
-    flex-direction: column; /* Stack items vertically on very small screens for better readability */
-    align-items: center;
+    padding: 20px 8px;
   }
 
   .mockbrief-item {
-    padding: 12px 18px;
-    font-size: 0.9rem;
-    width: 100%;
-    max-width: 300px;
+    padding: 12px 16px;
+    font-size: 0.85rem;
+    min-height: 52px;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY & PERFORMANCE
+   ============================================ */
+
+/* Focus states for keyboard navigation */
+.mockbrief-item:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 4px;
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .mockbrief-item {
+    border: 3px solid var(--text-primary);
+  }
+}
+
+/* Dark mode adjustments (if needed) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dark-bg: #0a0a15;
+  }
+}
+
+/* ============================================
+   PRINT STYLES (Optional)
+   ============================================ */
+
+@media print {
+  .mockbrief-page {
+    background: white;
+    color: black;
   }
 
-  .mockbrief-item:hover {
-    transform: none; /* Disable scale on mobile for better touch UX */
+  .mockbrief-page::before {
+    display: none;
+  }
+
+  .mockbrief-item {
+    break-inside: avoid;
+    border-color: #000;
+    color: #000;
   }
 }

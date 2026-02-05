@@ -1,387 +1,867 @@
 /* =========================================================
-   Base Layout & Form
+   MODERN CV BUILDER - REDESIGNED STYLESHEET
+   ========================================================= */
+
+/* =========================================================
+   CSS VARIABLES - Easy Theme Customization
+   ========================================================= */
+:root {
+  /* Primary Colors */
+  --primary-blue: #4f46e5;
+  --primary-blue-dark: #4338ca;
+  --primary-blue-light: #818cf8;
+  
+  /* Secondary Colors */
+  --secondary-purple: #7c3aed;
+  --secondary-teal: #14b8a6;
+  --secondary-orange: #f97316;
+  
+  /* Neutral Colors */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  
+  /* Status Colors */
+  --success: #10b981;
+  --error: #ef4444;
+  --warning: #f59e0b;
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =========================================================
+   Global Styles & Resets
+   ========================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================================================
+   Main Page Layout
    ========================================================= */
 .makecv-page {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  padding: 1rem;
-  background: #f7f7f7;
-  font-family: Arial, sans-serif;
+  display: grid;
+  grid-template-columns: minmax(340px, 480px) 1fr;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl);
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
 }
 
+.makecv-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* =========================================================
+   Form Container
+   ========================================================= */
 .makecv-form {
-  flex: 1 1 320px;
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background: white;
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  z-index: 10;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  animation: slideInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.makecv-form h1 { margin-top: 0; }
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
+/* Custom Scrollbar */
+.makecv-form::-webkit-scrollbar {
+  width: 8px;
+}
+
+.makecv-form::-webkit-scrollbar-track {
+  background: var(--gray-100);
+  border-radius: var(--radius-full);
+}
+
+.makecv-form::-webkit-scrollbar-thumb {
+  background: var(--primary-blue);
+  border-radius: var(--radius-full);
+}
+
+.makecv-form::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-blue-dark);
+}
+
+.makecv-form h1 {
+  margin: 0 0 var(--spacing-lg) 0;
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-blue), var(--secondary-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Form Labels */
 .makecv-form label {
   display: block;
-  margin-top: 1rem;
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-xs);
   font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--gray-700);
+  letter-spacing: 0.01em;
 }
 
+/* Form Inputs */
 .makecv-form input,
 .makecv-form textarea,
 .makecv-form select {
   width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.3rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin-top: var(--spacing-xs);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all var(--transition-base);
+  background: white;
+  color: var(--gray-800);
 }
 
+.makecv-form input:focus,
+.makecv-form textarea:focus,
+.makecv-form select:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  transform: translateY(-1px);
+}
+
+.makecv-form textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.5;
+}
+
+/* Form Blocks */
 .makecv-form .block {
-  margin-top: 0.75rem;
-  padding: 0.75rem;
-  border: 1px dashed #ddd;
-  border-radius: 6px;
-  background: #fafafa;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-lg);
+  border: 2px dashed var(--gray-300);
+  border-radius: var(--radius-lg);
+  background: var(--gray-50);
+  position: relative;
+  transition: all var(--transition-base);
 }
 
+.makecv-form .block:hover {
+  border-color: var(--primary-blue-light);
+  background: rgba(79, 70, 229, 0.02);
+}
+
+/* Buttons */
 .makecv-form button {
-  margin-top: 0.5rem;
-  padding: 0.45rem 0.9rem;
-  background: #3498db;
+  margin-top: var(--spacing-sm);
+  padding: 0.7rem 1.4rem;
+  background: var(--primary-blue);
   border: none;
-  color: #fff;
-  border-radius: 6px;
+  color: white;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.9rem;
   cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
 }
-.makecv-form button:hover { background: #2980b9; }
-.makecv-form button.primary { background: #27ae60; }
-.makecv-form button.primary:hover { background: #1e874b; }
 
+.makecv-form button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.makecv-form button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.makecv-form button:hover {
+  background: var(--primary-blue-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.makecv-form button:active {
+  transform: translateY(0);
+}
+
+.makecv-form button.primary {
+  background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+}
+
+.makecv-form button.primary:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+/* Form Actions */
 .form-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
-  margin-top: 1rem;
+  margin-top: var(--spacing-lg);
 }
 
+/* Success Message */
 .message {
-  margin-top: 0.5rem;
-  color: #27ae60;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  color: var(--success);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: var(--radius-md);
   font-weight: 600;
+  font-size: 0.9rem;
+  animation: slideDown 0.4s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* =========================================================
-   CV Preview Base
+   CV Preview Container
    ========================================================= */
 .makecv-preview {
-  flex: 1 1 600px;
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  overflow-x: auto;
+  width: 210mm;
+  min-height: 297mm;
+  padding: 20mm;
+  margin: 0 auto;
+  background: white;
+  box-shadow: var(--shadow-xl);
+  border-radius: var(--radius-lg);
+  overflow: auto;
+  position: relative;
+  z-index: 10;
+  animation: slideInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.makecv-preview::-webkit-scrollbar {
+  width: 10px;
+}
+
+.makecv-preview::-webkit-scrollbar-track {
+  background: var(--gray-100);
+}
+
+.makecv-preview::-webkit-scrollbar-thumb {
+  background: var(--gray-400);
+  border-radius: var(--radius-full);
+}
+
+.makecv-preview::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-500);
+}
+
+/* =========================================================
+   CV Template Base Styles
+   ========================================================= */
 .cv-template {
   width: 100%;
-  color: #222;
-  line-height: 1.4;
+  color: var(--gray-800);
+  line-height: 1.6;
+  font-size: 0.95rem;
 }
 
+/* CV Header */
 .cv-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-lg);
+  position: relative;
 }
 
 .cv-header h1 {
   margin: 0;
-  font-size: 1.8rem;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  letter-spacing: -0.5px;
 }
 
 .cv-contact {
   font-size: 0.9rem;
-  color: #555;
+  color: var(--gray-600);
+  line-height: 1.8;
 }
 
 .cv-photo {
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: 100px;
   object-fit: cover;
   border-radius: 50%;
+  border: 4px solid white;
+  box-shadow: var(--shadow-md);
 }
 
+/* Section Headers */
 .cv-template h3 {
-  margin-top: 1.2rem;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 0.2rem;
-  font-size: 1.1rem;
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-xs);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
 }
 
+/* Skills Section */
 .skills {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
 }
 
 .skill-chip {
-  background: #e0e0e0;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
+  background: linear-gradient(135deg, var(--gray-100), var(--gray-200));
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full);
   font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gray-700);
+  transition: all var(--transition-fast);
+  border: 1px solid var(--gray-300);
+}
+
+.skill-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
 }
 
 /* =========================================================
-   15 Unique Template Variants (ATS-Friendly)
+   15 MODERN TEMPLATE VARIANTS (ATS-Friendly)
    ========================================================= */
 
-/* 1. Minimal Classic */
+/* Template 1: Minimal Executive */
 .cv-template.template-1 {
-  font-family: "Helvetica", Arial, sans-serif;
-  border-left: 6px solid #2c3e50;
-  padding-left: 1rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  border-left: 5px solid var(--gray-900);
+  padding-left: var(--spacing-lg);
 }
 
-/* 2. Elegant Serif */
-.cv-template.template-2 {
-  font-family: "Georgia", serif;
-  color: #2c3e50;
-  letter-spacing: 0.2px;
+.cv-template.template-1 h3 {
+  border-bottom: 3px solid var(--gray-900);
 }
 
-/* 3. Modern Blue */
-.cv-template.template-3 {
-  border-top: 6px solid #3498db;
-  padding-top: 1rem;
-}
-
-/* 4. Side Bar Highlight */
-.cv-template.template-4 {
-  border-left: 8px double #27ae60;
-  padding-left: 1rem;
-  background: #fdfdfd;
-}
-
-/* 5. Boxed Shadow */
-.cv-template.template-5 {
-  border: 1px solid #ddd;
-  box-shadow: 0 0 12px rgba(0,0,0,0.05);
-  padding: 1rem;
-  border-radius: 8px;
-}
-
-/* 6. Clean Sans */
-.cv-template.template-6 {
-  font-family: "Trebuchet MS", sans-serif;
-  color: #444;
-}
-
-/* 7. Purple Accent */
-.cv-template.template-7 {
-  border-top: 5px solid #8e44ad;
-  border-bottom: 5px solid #8e44ad;
-  padding: 1rem 0;
-}
-
-/* 8. Orange Title Bars */
-.cv-template.template-8 h3 {
-  background: #e67e22;
-  color: #fff;
-  padding: 0.2rem 0.4rem;
+.cv-template.template-1 .skill-chip {
+  background: var(--gray-900);
+  color: white;
   border: none;
 }
 
-/* 9. Dashed Border Chic */
+/* Template 2: Elegant Serif Pro */
+.cv-template.template-2 {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: #2c3e50;
+  letter-spacing: 0.3px;
+}
+
+.cv-template.template-2 h1 {
+  font-style: italic;
+  border-bottom: 2px double #2c3e50;
+  padding-bottom: var(--spacing-sm);
+}
+
+.cv-template.template-2 h3 {
+  font-style: italic;
+  border-bottom: 1px solid #2c3e50;
+  text-transform: none;
+}
+
+/* Template 3: Modern Azure */
+.cv-template.template-3 {
+  border-top: 6px solid #0ea5e9;
+  padding-top: var(--spacing-lg);
+}
+
+.cv-template.template-3 h3 {
+  color: #0ea5e9;
+  border-bottom: 2px solid #0ea5e9;
+}
+
+.cv-template.template-3 .skill-chip {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  color: white;
+  border: none;
+}
+
+/* Template 4: Emerald Sidebar */
+.cv-template.template-4 {
+  border-left: 8px solid #10b981;
+  padding-left: var(--spacing-xl);
+  background: linear-gradient(to right, rgba(16, 185, 129, 0.02), transparent);
+}
+
+.cv-template.template-4 h3 {
+  color: #059669;
+  border-bottom: 2px solid #10b981;
+}
+
+.cv-template.template-4 h1 {
+  color: #047857;
+}
+
+/* Template 5: Premium Shadow */
+.cv-template.template-5 {
+  border: 2px solid var(--gray-200);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.08);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  background: white;
+}
+
+.cv-template.template-5 h3 {
+  background: linear-gradient(135deg, var(--gray-100), var(--gray-200));
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  border: none;
+}
+
+/* Template 6: Clean Tech */
+.cv-template.template-6 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #334155;
+  letter-spacing: 0.2px;
+}
+
+.cv-template.template-6 h3 {
+  background: linear-gradient(to right, #334155 0%, transparent 100%);
+  color: white;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  border: none;
+}
+
+/* Template 7: Violet Professional */
+.cv-template.template-7 {
+  border-top: 5px solid #8b5cf6;
+  border-bottom: 5px solid #8b5cf6;
+  padding: var(--spacing-xl) 0;
+}
+
+.cv-template.template-7 h3 {
+  color: #7c3aed;
+  border-bottom: 3px double #8b5cf6;
+}
+
+.cv-template.template-7 .cv-header h1 {
+  color: #6d28d9;
+}
+
+/* Template 8: Sunset Gradient */
+.cv-template.template-8 h3 {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.cv-template.template-8 .cv-header {
+  border-bottom: 3px solid #f97316;
+}
+
+/* Template 9: Dotted Artistic */
 .cv-template.template-9 {
-  border: 2px dashed #7f8c8d;
-  padding: 1rem;
-  border-radius: 6px;
+  border: 3px dashed #64748b;
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  background: rgba(248, 250, 252, 0.5);
 }
 
-/* 10. Calibri Professional */
+.cv-template.template-9 h3 {
+  border-bottom: 2px dashed #64748b;
+  color: #475569;
+}
+
+/* Template 10: Corporate Calibri */
 .cv-template.template-10 {
-  font-family: Calibri, sans-serif;
-  color: #1a1a1a;
+  font-family: Calibri, 'Trebuchet MS', sans-serif;
+  color: #1e293b;
+  letter-spacing: 0.1px;
 }
 
-/* 11. Red Edge */
+.cv-template.template-10 h3 {
+  background: var(--gray-800);
+  color: white;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: none;
+  margin-left: calc(-1 * var(--spacing-md));
+  padding-left: var(--spacing-md);
+}
+
+/* Template 11: Ruby Edge */
 .cv-template.template-11 {
-  border-left: 6px solid #c0392b;
-  padding-left: 1rem;
-  background: #fffafa;
+  border-left: 6px solid #dc2626;
+  padding-left: var(--spacing-xl);
+  background: linear-gradient(to right, rgba(220, 38, 38, 0.02), transparent);
 }
 
-/* 12. Green Outline */
+.cv-template.template-11 h3 {
+  color: #b91c1c;
+  border-bottom: 2px solid #dc2626;
+}
+
+.cv-template.template-11 .cv-header h1 {
+  color: #991b1b;
+}
+
+/* Template 12: Mint Frame */
 .cv-template.template-12 {
-  border: 2px solid #2ecc71;
-  border-radius: 8px;
-  padding: 1rem;
+  border: 3px solid #14b8a6;
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-xl);
+  background: white;
 }
 
-/* 13. Double Blue Header */
+.cv-template.template-12 h3 {
+  color: #0d9488;
+  border-bottom: 2px solid #14b8a6;
+}
+
+.cv-template.template-12 .skill-chip {
+  background: linear-gradient(135deg, #14b8a6, #0d9488);
+  color: white;
+  border: none;
+}
+
+/* Template 13: Double Line Classic */
 .cv-template.template-13 h1 {
-  border-bottom: 4px double #2980b9;
-  padding-bottom: 0.3rem;
+  border-bottom: 5px double #3b82f6;
+  padding-bottom: var(--spacing-sm);
+  color: #1e40af;
 }
 
-/* 14. Warm Gold */
+.cv-template.template-13 h3 {
+  border-bottom: 3px double #3b82f6;
+  color: #2563eb;
+}
+
+/* Template 14: Golden Professional */
 .cv-template.template-14 {
-  border-left: 6px solid #f39c12;
-  padding-left: 1rem;
-  font-family: Verdana, sans-serif;
+  border-left: 6px solid #f59e0b;
+  padding-left: var(--spacing-xl);
+  font-family: Verdana, Geneva, sans-serif;
 }
 
-/* 15. Shadow Card */
+.cv-template.template-14 h3 {
+  color: #d97706;
+  border-bottom: 2px solid #f59e0b;
+}
+
+.cv-template.template-14 .cv-header {
+  border-bottom: 3px solid #f59e0b;
+}
+
+/* Template 15: Elevated Card */
 .cv-template.template-15 {
-  border: 1px solid #ccc;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  padding: 1.2rem;
-  font-family: "Segoe UI", sans-serif;
+  border: 1px solid var(--gray-300);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-xl);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: white;
 }
 
-
-/* --- A4 preview box --- */
-.makecv-preview {
-  width: 210mm;          /* A4 width */
-  min-height: 297mm;     /* at least one page height */
-  padding: 20mm;
-  margin: 0 auto;
-  background: #fff;
-  box-shadow: 0 0 6px rgba(0,0,0,0.2);
-  overflow: auto;        /* still scrollable in the browser */
+.cv-template.template-15 h3 {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  border: none;
+  box-shadow: var(--shadow-md);
 }
 
-/* Optional: cleaner print output */
+/* =========================================================
+   Print Styles
+   ========================================================= */
 @media print {
   body {
     margin: 0;
+    background: white;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
+  
+  .makecv-page {
+    display: block;
+    background: white;
+    padding: 0;
+  }
+  
+  .makecv-form {
+    display: none;
+  }
+  
   .makecv-preview {
     box-shadow: none;
     margin: 0;
+    border-radius: 0;
     page-break-after: always;
+    width: 100%;
+    padding: 15mm;
+  }
+  
+  .cv-template {
+    page-break-inside: avoid;
+  }
+  
+  .cv-template h3 {
+    page-break-after: avoid;
   }
 }
 
-/* Responsive tweaks - added media queries for tablet and mobile */
+/* =========================================================
+   Responsive Design
+   ========================================================= */
+
+/* Large Tablets & Small Desktops */
+@media (max-width: 1200px) {
+  .makecv-page {
+    grid-template-columns: 1fr;
+    padding: var(--spacing-lg);
+  }
+  
+  .makecv-form {
+    max-height: none;
+  }
+  
+  .makecv-preview {
+    width: 100%;
+    max-width: 210mm;
+  }
+}
+
+/* Tablets */
 @media (max-width: 768px) {
   .makecv-page {
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 0.75rem;
+    padding: var(--spacing-md);
+    gap: var(--spacing-lg);
   }
-
+  
   .makecv-form {
-    flex: none;
-    padding: 1.25rem;
-    order: 1; /* Form first on mobile */
+    padding: var(--spacing-lg);
   }
-
+  
+  .makecv-form h1 {
+    font-size: 1.6rem;
+  }
+  
   .makecv-preview {
-    flex: none;
-    width: 100%;
-    max-width: 100%;
-    min-height: auto; /* Allow natural height on mobile */
-    padding: 1rem;
-    margin: 0;
-    overflow-x: auto; /* Keep scrollable for A4 width */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: var(--spacing-lg);
+    min-height: auto;
   }
-
-  .makecv-form label {
-    font-size: 0.95rem;
-  }
-
-  .makecv-form input,
-  .makecv-form textarea,
-  .makecv-form select {
-    padding: 0.75rem;
-    font-size: 1rem;
-  }
-
-  .makecv-form button {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.95rem;
-  }
-
+  
   .cv-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: var(--spacing-md);
   }
+  
+  .cv-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .cv-photo {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .cv-template h3 {
+    font-size: 1.1rem;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .form-actions button {
+    width: 100%;
+  }
+}
 
+/* Mobile Phones */
+@media (max-width: 480px) {
+  .makecv-page {
+    padding: var(--spacing-sm);
+    gap: var(--spacing-md);
+  }
+  
+  .makecv-form {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+  }
+  
+  .makecv-form h1 {
+    font-size: 1.4rem;
+  }
+  
+  .makecv-form input,
+  .makecv-form textarea,
+  .makecv-form select {
+    padding: 0.65rem 0.85rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  .makecv-form button {
+    padding: 0.65rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  
+  .makecv-preview {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+  }
+  
   .cv-header h1 {
     font-size: 1.5rem;
   }
-
+  
   .cv-photo {
     width: 70px;
     height: 70px;
   }
-
+  
+  .cv-template {
+    font-size: 0.9rem;
+  }
+  
   .cv-template h3 {
     font-size: 1rem;
+    margin-top: var(--spacing-lg);
   }
-
-  .skills {
-    gap: 0.3rem;
-  }
-
+  
   .skill-chip {
     font-size: 0.8rem;
-    padding: 0.25rem 0.6rem;
+    padding: 0.3rem 0.7rem;
   }
 }
 
-@media (max-width: 480px) {
-  .makecv-page {
-    padding: 0.5rem;
-    gap: 1rem;
+/* =========================================================
+   Accessibility Enhancements
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
+}
 
-  .makecv-form {
-    padding: 1rem;
-  }
+/* Focus Styles */
+*:focus-visible {
+  outline: 3px solid var(--primary-blue);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
 
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .makecv-form,
   .makecv-preview {
-    padding: 0.75rem;
+    border: 2px solid currentColor;
   }
-
-  .makecv-form input,
-  .makecv-form textarea,
-  .makecv-form select {
-    padding: 0.6rem;
-    font-size: 0.95rem;
-  }
-
+  
   .makecv-form button {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-  }
-
-  .cv-header h1 {
-    font-size: 1.3rem;
-  }
-
-  .cv-photo {
-    width: 60px;
-    height: 60px;
-  }
-
-  .cv-template h3 {
-    font-size: 0.95rem;
-  }
-
-  .skill-chip {
-    font-size: 0.75rem;
-    padding: 0.2rem 0.5rem;
-  }
-
-  .form-actions {
-    flex-direction: column;
-    gap: 0.4rem;
+    border: 2px solid currentColor;
   }
 }

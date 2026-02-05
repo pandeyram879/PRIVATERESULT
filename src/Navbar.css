@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  padding: 8px 12px;
+  padding: 1px 40px;
   gap: 3px;
   z-index: 100;
   justify-content: space-around;
@@ -50,6 +50,7 @@
 
 .nav-search-input {
   width: 190px;
+  height: 26px;
   padding: 8px 12px 8px 36px;
   border-radius: 5px;
   border: none;
@@ -459,4 +460,15 @@
   .whatsapp-logo {
     height: 12px;
   }
+}
+/* Compact avatar only */
+.nav-user-compact {
+  margin-left: auto;
+}
+
+.compact-avatar {
+  width: 30px;
+  height: 30px;
+  font-size: 0.8rem;
+  cursor: pointer;
 }

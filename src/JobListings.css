@@ -21,7 +21,7 @@
 }
 
 .job-table thead {
-  background: linear-gradient(90deg, #0066ff, #00e0ff);
+   background: linear-gradient(90deg,  #111827, #3b4076);
 }
 
 .job-table th {
@@ -51,7 +51,7 @@
 .job-table a {
   display: inline-block;
   padding: 6px 12px;
-  background: linear-gradient(90deg, #0066ff, #00e0ff);
+   background: linear-gradient(90deg,  #111827, #3b4076);
   color: #fff;
   font-weight: bold;
   text-decoration: none;

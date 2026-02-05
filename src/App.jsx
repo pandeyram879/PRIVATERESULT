@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useMemo, useState, useCallback } from "react";
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase';
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "framer-motion"; // 👈 for fade animation
 import "./App.css";
@@ -22,24 +24,46 @@ import LandingPage from "./LandingPage.jsx";
 import QuickLinks from "./QuickLinks.jsx";
 import VideoPlayer from "./VideoPlayer.jsx";
 import AuthPages from "./AuthPages.jsx";
+import Dashboard from "./Dashboard.jsx";
 
 function App() {
   const [query] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [hasVisited, setHasVisited] = useState(false);
+  const [hasVisitedLanding, setHasVisitedLanding] = useState(false);
+  const [user, setUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Check if user has visited before (using sessionStorage for session-based, or localStorage for permanent)
+  // Check authentication state
   useEffect(() => {
-    const visited = sessionStorage.getItem("hasVisitedBefore");
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setAuthLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  // Check if user has visited landing page
+  useEffect(() => {
+    const visited = sessionStorage.getItem("hasVisitedLanding");
     if (visited) {
-      setHasVisited(true);
+      setHasVisitedLanding(true);
     }
   }, []);
 
-  const isLandingPage = location.pathname === "/"; // 👈 check route
+  // Mark landing page as visited when user visits it
+  useEffect(() => {
+    if (location.pathname === "/") {
+      sessionStorage.setItem("hasVisitedLanding", "true");
+      setHasVisitedLanding(true);
+    }
+  }, [location.pathname]);
+
+  const isLandingPage = location.pathname === "/";
+  const isAuthPage = location.pathname === "/login" || location.pathname === "/authpages";
 
   const searchIndex = useMemo(
     () => [
@@ -48,6 +72,7 @@ function App() {
       { title: "Competitions — Coding & DSA Contests", type: "route", url: "/competitions" },
       { title: "Certifications — Top Free & Paid Certs", type: "route", url: "/certifications" },
       { title: "Career Pages — Explore Companies", type: "route", url: "/careerpages" },
+      { title: "Dashboard — Your Profile", type: "route", url: "/dashboard" },
       { title: "HCL Tech — Senior Project Manager (Apply Now)", type: "external", url: "https://www.hcltech.com/jobs/senior-project-manager-2" },
       { title: "UPSC Civil Services Prelims Result 2025", type: "external", url: "#" },
       { title: "Railway Group D Admit Card 2025", type: "external", url: "#" },
@@ -106,29 +131,53 @@ function App() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [onKeyDown]);
 
-  // If user has visited before and tries to access landing page, redirect to home
-  if (hasVisited && location.pathname === "/") {
-    return <Navigate to="/home" replace />;
+  // Show loading screen while checking auth
+  if (authLoading) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        background: 'linear-gradient(to bottom right, #38bdf8, #7dd3fc, #3b82f6)'
+      }}>
+        <h2 style={{ color: 'white', fontSize: '1.5rem' }}>Loading...</h2>
+      </div>
+    );
   }
+
+  // Protected Route Component
+  const ProtectedRoute = ({ children }) => {
+    // If user not logged in and hasn't visited landing page, go to landing
+    if (!user && !hasVisitedLanding) {
+      return <Navigate to="/" replace />;
+    }
+    // If user not logged in but has visited landing, go to login
+    if (!user && hasVisitedLanding) {
+      return <Navigate to="/login" replace />;
+    }
+    // User is logged in, show the page
+    return children;
+  };
 
   return (
     <div>
-      {/* Header visible only when NOT on LandingPage */}
-      {!isLandingPage && (
+      {/* Header visible only when NOT on LandingPage or AuthPages */}
+      {!isLandingPage && !isAuthPage && (
         <div className="header">
-          <Header />
+          <Header user={user} />
         </div>
       )}
 
-      {/* Navbar visible only when NOT on LandingPage */}
-      {!isLandingPage && (
+      {/* Navbar visible only when NOT on LandingPage or AuthPages */}
+      {!isLandingPage && !isAuthPage && (
         <motion.div
           className="navbar"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7 }}
         >
-          <Navbar />
+          <Navbar user={user} />
         </motion.div>
       )}
 
@@ -142,39 +191,195 @@ function App() {
           transition={{ duration: 0.6 }}
         >
           <Routes location={location} key={location.pathname}>
-            {/* Landing Page */}
+            {/* Landing Page - Always accessible */}
             <Route path="/" element={<LandingPage />} />
 
-            {/* Home Page */}
-            <Route
+            {/* Auth Pages - Redirect to home if already logged in */}
+            <Route 
+              path="/login" 
+              element={user ? <Navigate to="/home" replace /> : <AuthPages />} 
+            />
+            <Route 
+              path="/authpages" 
+              element={user ? <Navigate to="/home" replace /> : <AuthPages />} 
+            />
+
+            {/* All Other Routes - PROTECTED (Login Required) */}
+            <Route 
               path="/home"
               element={
-                <div className="content-container">
-                  <MockTests />
-                  <JobListings />
-                  <QuickLinks />
-                </div>
+                <ProtectedRoute>
+                  <div className="content-container">
+                    <MockTests />
+                    <JobListings />
+                    <QuickLinks />
+                  </div>
+                </ProtectedRoute>
               }
             />
 
-            <Route path="/syllabus" element={<Syllabus />} />
-            <Route path="/playlists" element={<Playlists />} />
-            <Route path="/certifications" element={<Certifications />} />
-            <Route path="/competitions" element={<Competitions />} />
-            <Route path="/careerpages" element={<CareerPages />} />
-            <Route path="/joblistings" element={<JobListings />} />
-            <Route path="/mocktests" element={<MockTests />} />
-            <Route path="/mocktestsbrief" element={<MockTestsBrief />} />
-            <Route path="/joblistingsbrief" element={<JobListingsBrief />} />
-            <Route path="/expiredjobs" element={<ExpiredJobs />} />
-            <Route path="/makecv" element={<MakeCV />} />
-            <Route path="/importantupdates" element={<ImportantUpdates />} />
-            <Route path="/navbar" element={<Navbar />} />
-            <Route path="/interviewquestions" element={<InterviewQuestions />} />
-            <Route path="/header" element={<Header />} />
-            <Route path="/player" element={<VideoPlayer />} />
-            <Route path="/authpages" element={<AuthPages />} /> 
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
 
+            <Route 
+              path="/syllabus" 
+              element={
+                <ProtectedRoute>
+                  <Syllabus />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/playlists" 
+              element={
+                <ProtectedRoute>
+                  <Playlists />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/certifications" 
+              element={
+                <ProtectedRoute>
+                  <Certifications />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/competitions" 
+              element={
+                <ProtectedRoute>
+                  <Competitions />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/careerpages" 
+              element={
+                <ProtectedRoute>
+                  <CareerPages />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/joblistings" 
+              element={
+                <ProtectedRoute>
+                  <JobListings />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/mocktests" 
+              element={
+                <ProtectedRoute>
+                  <MockTests />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/mocktestsbrief" 
+              element={
+                <ProtectedRoute>
+                  <MockTestsBrief />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/joblistingsbrief" 
+              element={
+                <ProtectedRoute>
+                  <JobListingsBrief />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/expiredjobs" 
+              element={
+                <ProtectedRoute>
+                  <ExpiredJobs />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/makecv" 
+              element={
+                <ProtectedRoute>
+                  <MakeCV />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/importantupdates" 
+              element={
+                <ProtectedRoute>
+                  <ImportantUpdates />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/navbar" 
+              element={
+                <ProtectedRoute>
+                  <Navbar />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/interviewquestions" 
+              element={
+                <ProtectedRoute>
+                  <InterviewQuestions />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/header" 
+              element={
+                <ProtectedRoute>
+                  <Header user={user} />
+                </ProtectedRoute>
+              } 
+            />
+
+            <Route 
+              path="/player" 
+              element={
+                <ProtectedRoute>
+                  <VideoPlayer />
+                </ProtectedRoute>
+              } 
+            />
+
+            {/* 404 - Redirect based on auth status */}
+            <Route 
+              path="*" 
+              element={
+                !hasVisitedLanding ? <Navigate to="/" replace /> : 
+                !user ? <Navigate to="/login" replace /> : 
+                <Navigate to="/home" replace />
+              } 
+            />
           </Routes>
         </motion.div>
       </AnimatePresence>

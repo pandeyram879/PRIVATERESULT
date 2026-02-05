@@ -19,10 +19,10 @@ export default function LandingPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Mark that user has visited the landing page
-  const handleNavigate = (path) => {
-    sessionStorage.setItem("hasVisitedBefore", "true");
-    navigate(path, { replace: true }); // replace: true prevents going back to landing page
+  // Mark that user has visited the landing page and redirect to login
+  const handleGetStarted = () => {
+    sessionStorage.setItem("hasVisitedLanding", "true");
+    navigate("/login", { replace: true });
   };
 
   const features = [
@@ -69,9 +69,9 @@ export default function LandingPage() {
       gradient: "from-teal-400 to-blue-400"
     },
     {
-      icon: "⚡",
-      title: "Instant Access",
-      desc: "No sign-up required. Just visit and start using all features!",
+      icon: "🔐",
+      title: "Secure Access",
+      desc: "Sign up once and get lifetime access to all premium features!",
       gradient: "from-yellow-400 to-orange-400"
     }
   ];
@@ -110,12 +110,12 @@ export default function LandingPage() {
             </motion.div>
             
             <motion.button
-              onClick={() => handleNavigate("/home")}
+              onClick={handleGetStarted}
               className="nav-explore-btn"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Start Now 🚀
+              Login / Sign Up 🚀
             </motion.button>
           </div>
         </div>
@@ -166,13 +166,13 @@ export default function LandingPage() {
             transition={{ delay: 0.6, duration: 0.8 }}
           >
             <motion.button
-              onClick={() => handleNavigate("/mocktests")}
+              onClick={handleGetStarted}
               className="hero-btn hero-btn-primary"
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
               <span className="btn-content">
-                Start Mock Tests
+                Get Started Now
                 <svg className="btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
@@ -180,12 +180,12 @@ export default function LandingPage() {
             </motion.button>
 
             <motion.button
-              onClick={() => handleNavigate("/makecv")}
+              onClick={handleGetStarted}
               className="hero-btn hero-btn-secondary"
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
-              Build Resume
+              Join Free Today
             </motion.button>
           </motion.div>
 
@@ -195,21 +195,39 @@ export default function LandingPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8, duration: 0.8 }}
           >
-            {[
-              { path: "/careerpages", label: "Career Pages", icon: "🏢" },
-              { path: "/playlists", label: "Playlists", icon: "🎥" },
-              { path: "/joblistings", label: "Explore Jobs", icon: "💼" }
-            ].map((item, i) => (
-              <motion.button
-                key={i}
-                onClick={() => handleNavigate(item.path)}
-                className="hero-link-btn"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {item.icon} {item.label}
-              </motion.button>
-            ))}
+            <motion.div
+              className="hero-features-preview"
+              style={{
+                display: 'flex',
+                gap: '1rem',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                marginTop: '1rem'
+              }}
+            >
+              {[
+                { label: "Mock Tests", icon: "🧠" },
+                { label: "Job Alerts", icon: "💼" },
+                { label: "Resume Builder", icon: "📄" },
+                { label: "Career Guide", icon: "🏢" }
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  className="hero-link-btn"
+                  whileHover={{ scale: 1.05 }}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    borderRadius: '2rem',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    cursor: 'default'
+                  }}
+                >
+                  {item.icon} {item.label}
+                </motion.div>
+              ))}
+            </motion.div>
           </motion.div>
         </motion.div>
 
@@ -328,8 +346,30 @@ export default function LandingPage() {
               We bring all essential career tools under one roof — from mock tests that boost your preparation, 
               to the latest job openings and professional resume creation tools. Our platform is designed to 
               empower job seekers, students, and professionals with the resources they need to succeed. 
-              Everything you need for your career journey, right here, completely free.
+              Sign up once and get lifetime access to all features, completely free.
             </p>
+            
+            <motion.button
+              onClick={handleGetStarted}
+              className="about-cta-btn"
+              whileHover={{ scale: 1.05, y: -3 }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                marginTop: '2rem',
+                padding: '1rem 2.5rem',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '2rem',
+                fontSize: '1.1rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                boxShadow: '0 10px 30px rgba(102, 126, 234, 0.4)',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              Sign Up Now - It's Free! 🎉
+            </motion.button>
           </motion.div>
         </div>
       </section>
@@ -352,13 +392,13 @@ export default function LandingPage() {
             
             <div className="cta-buttons">
               <motion.button
-                onClick={() => handleNavigate("/home")}
+                onClick={handleGetStarted}
                 className="cta-btn cta-btn-primary"
                 whileHover={{ scale: 1.05, y: -3 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="cta-btn-content">
-                  Start Now 🚀
+                  Create Free Account 🚀
                   <svg className="cta-btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
@@ -366,14 +406,22 @@ export default function LandingPage() {
               </motion.button>
 
               <motion.button
-                onClick={() => handleNavigate("/home")}
+                onClick={handleGetStarted}
                 className="cta-btn cta-btn-secondary"
                 whileHover={{ scale: 1.05, y: -3 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Start Now 🚀
+                Login to Continue
               </motion.button>
             </div>
+            
+            <p style={{ 
+              marginTop: '1.5rem', 
+              color: 'rgba(255, 255, 255, 0.8)',
+              fontSize: '0.95rem'
+            }}>
+              ✨ No credit card required • ✅ Email verification • 🔒 100% Secure
+            </p>
           </motion.div>
         </div>
       </section>
